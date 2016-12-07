@@ -42,6 +42,8 @@ public class SplashActivity extends Activity {
 		 * 新版本的描述信息
 		 * 服务器版本号
 		 * 新版本apk下载地址*/
+		
+		System.out.println("gagaga");
 	}
 	
 	/**
