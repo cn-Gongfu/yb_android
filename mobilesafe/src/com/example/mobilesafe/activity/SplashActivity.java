@@ -1,16 +1,25 @@
 package com.example.mobilesafe.activity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.mobilesafe.R;
+import com.example.mobilesafe.utils.StreamUtil;
 
 
 public class SplashActivity extends Activity {
 
+	static final String tag = "SplashActivity";
     private TextView tv_version_name;
 	private int mLocalVersionCode;
 
@@ -43,9 +52,50 @@ public class SplashActivity extends Activity {
 		 * 服务器版本号
 		 * 新版本apk下载地址*/
 		
-		System.out.println("gagaga");
+		checkVersion();
 	}
 	
+	/**
+	 * 检测版本号
+	 */
+	private void checkVersion() {
+		new Thread(){
+			public void run() {	
+				//发送请求获取数据  ,参数是请求json的链接地址
+				//http://192.168.1.2/versioninfo.json 测试阶段不是最优
+				//10.0.2.2 仅限于模拟器访问电脑的tomcat
+				try {
+					URL url = new URL("http://10.0.2.2:8080/versioninfo.json");
+					//1. 开启一个连接
+					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					//2. 设置常见的请求参数(请求头)
+					
+					//请求超时
+					connection.setConnectTimeout(2000);
+					//读取超时
+					connection.setReadTimeout(2000);
+					
+					//3. 默认就是GET请求
+//					connection.setRequestMethod("POST");
+					
+					//4. 获取请求成功响应码
+					if(connection.getResponseCode() == 200){
+						//5. 以流的形式,将数据取出来
+						InputStream inputStream = connection.getInputStream();
+						//6. 将流转成字符串
+						String json = StreamUtil.stream2String(inputStream);
+						Log.i(tag, json);
+					}
+				} catch (MalformedURLException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			};
+		}.start();
+		
+	}
+
 	/**
 	 * 返回版本号
 	 * @return 非0, 代表获取成功
