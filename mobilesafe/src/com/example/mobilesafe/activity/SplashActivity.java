@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobilesafe.R;
@@ -77,6 +79,7 @@ public class SplashActivity extends Activity {
 			}
 		};
 	};
+	private RelativeLayout rl_root_splash;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +92,21 @@ public class SplashActivity extends Activity {
         
         //初始化数据
         initData();
+        
+        //初始化动画
+        initAnimation();
     }
+
+	
+	/**
+	 * 淡入的动画效果
+	 */
+	private void initAnimation() {
+		AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+		alphaAnimation.setDuration(3000);
+		
+		rl_root_splash.setAnimation(alphaAnimation);
+	}
 
 	/**
 	 * 弹出对话框，提示用户更新
@@ -273,6 +290,7 @@ public class SplashActivity extends Activity {
 	 */
 	private void initUI() {
 		tv_version_name = (TextView) findViewById(R.id.tv_version_name);
+		rl_root_splash = (RelativeLayout) findViewById(R.id.rl_root_splash);
 	}
     
     
