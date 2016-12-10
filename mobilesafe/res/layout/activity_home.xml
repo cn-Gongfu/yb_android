@@ -5,8 +5,26 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="程序主页面" />
+        android:text="功能列表" 
+        style="@style/TitleStyle"/>
 
+    <com.example.mobilesafe.view.FocusTextView
+        android:text="热烈庆祝，六一儿童节，儿童节快乐，祖国的花朵，未来的栋梁，加油，加油，加油，啦啦啦"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:textColor="#000"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:padding="5dp"
+        />
+    
+    <!-- 九宫格 -->
+    <GridView 
+        android:id="@+id/gv_home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3"
+        android:verticalSpacing="10dp"/>
 </LinearLayout>

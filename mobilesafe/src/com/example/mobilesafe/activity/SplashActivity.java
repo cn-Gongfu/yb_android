@@ -181,7 +181,7 @@ public class SplashActivity extends Activity {
 				//10.0.2.2 仅限于模拟器访问电脑的tomcat
 				Message msg = Message.obtain();
 				try {
-					URL url = new URL("http://10.0.2.2:8080/versioninfo.json");
+					URL url = new URL("http://192.168.1.2/versioninfo.json");
 					//1. 开启一个连接
 					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 					//2. 设置常见的请求参数(请求头)
@@ -207,7 +207,7 @@ public class SplashActivity extends Activity {
 						String versionCode = jsonObject.getString("versionCode");
 						mVersionDes = jsonObject.getString("versionDes");
 						String versionName = jsonObject.getString("versionName");
-						String versionUrl = jsonObject.getString("versionUrl");
+						String versionUrl = jsonObject.getString("downloadUrl");
 						
 						Log.i(tag, versionCode);
 						Log.i(tag, mVersionDes);
