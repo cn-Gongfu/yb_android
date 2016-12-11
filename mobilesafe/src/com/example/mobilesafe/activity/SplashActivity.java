@@ -19,12 +19,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.SyncStateContract.Constants;
 import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobilesafe.R;
+import com.example.mobilesafe.utils.ConstantValue;
+import com.example.mobilesafe.utils.SpUtil;
 import com.example.mobilesafe.utils.StreamUtil;
 import com.example.mobilesafe.utils.ToastUtil;
 
@@ -163,7 +166,18 @@ public class SplashActivity extends Activity {
 		 * 服务器版本号
 		 * 新版本apk下载地址*/
 		
-		checkVersion();
+		//读取用户的更新状态是否是开启的
+		if(SpUtil.getBoolean(getApplicationContext(), ConstantValue.OPEN_UPDATE, false)){
+			checkVersion();
+		}else{
+			//直接进入应用程序主界面
+//			enterHome();
+			//消息机制
+//			mHandler.sendMessageDelayed(msg, 4000);
+			//在发送消息4秒后去处理,ENTER_HOME状态码指向的消息
+			mHandler.sendEmptyMessageDelayed(ENTER_HOME, 4000);
+		}
+		
 	}
 	
 	/**
